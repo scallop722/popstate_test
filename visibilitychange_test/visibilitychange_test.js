@@ -9,8 +9,8 @@ let visibilitychangeHistory = JSON.parse(localStorage.getItem(storageKey)) || []
 const redraw = () => {
   visibilitychangeHistory = JSON.parse(localStorage.getItem(storageKey)) || [];
   const displayTarget = document.getElementById("displayTarget");
-  while( displayTarget.firstChild ){
-    displayTarget.removeChild( displayTarget.firstChild );
+  while (displayTarget.firstChild) {
+    displayTarget.removeChild(displayTarget.firstChild);
   }
   visibilitychangeHistory.forEach(history => {
     const listItem = document.createElement("li");
@@ -21,11 +21,16 @@ const redraw = () => {
 
 redraw();
 
+var lastState = ""
 // 履歴追加
 document.addEventListener("visibilitychange", () => {
-  visibilitychangeHistory.push(new Date() + ':' + document.visibilityState);
+  visibilitychangeHistory.push(new Date() + ":" + document.visibilityState);
   localStorage.setItem(storageKey, JSON.stringify(visibilitychangeHistory));
   redraw();
+  if (lastState === "hidden" && document.visibilityState === "visible") {
+    alert("非表示から表示状態になりました。");
+  }
+  lastState = document.visibilityState;
 });
 
 // 履歴削除
