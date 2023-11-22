@@ -1,4 +1,5 @@
 window.addEventListener("beforeunload", (e) => {
+  console.log("alert");
   e.preventDefault();
   e.returnValue = "";
 
